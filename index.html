@@ -130,7 +130,12 @@
 
         //setinstructor function
         $("#button").click(function() {
-            Coursetro.setInstructor($("#name").val(), $("#age").val());
+            Coursetro.setInstructor($("#name").val(), $("#age").val(),(err,res)=>{
+                if(err){
+                    $("#loader").hide();
+                    console.log('oh no you are not the owner');
+                }
+            });
             $("#loader").show();
         });
     </script>
