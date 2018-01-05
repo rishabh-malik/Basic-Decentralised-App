@@ -129,6 +129,7 @@
         });
 
         //setinstructor function
+        //only owner can change
         $("#button").click(function() {
             Coursetro.setInstructor($("#name").val(), $("#age").val(),(err,res)=>{
                 if(err){
