@@ -39,8 +39,10 @@
         web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 
+    //setting the first account of the testrpc as the default account
     web3.eth.defaultAccount = web3.eth.accounts[0];
 
+    //abi value
     var CoursetroContract=web3.eth.contract([
 	{
 		"constant": true,
@@ -80,9 +82,11 @@
 	}
 ]);
 
+    //contract details
     var Coursetro=CoursetroContract.at('0x2997db30d4e2b905c99086c2934089fb29ac698b');
     console.log(Coursetro);
 
+    //calling the getinstructor function
     Coursetro.getInstructor(function(error, result){
             if(!error)
                 {
@@ -93,6 +97,7 @@
                 console.error(error);
         });
 
+        //setinstructor function
         $("#button").click(function() {
             Coursetro.setInstructor($("#name").val(), $("#age").val());
         });
