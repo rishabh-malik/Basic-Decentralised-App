@@ -17,7 +17,7 @@
         <h1>Coursetro Instructor</h1>
 
         <h2 id="instructor"></h2>
-
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
         <label for="name" class="col-lg-2 control-label">Instructor Name</label>
         <input id="name" type="text">
 
@@ -63,6 +63,23 @@
 		"type": "function"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "Instructor",
+		"type": "event"
+	},
+	{
 		"constant": false,
 		"inputs": [
 			{
@@ -83,23 +100,38 @@
 ]);
 
     //contract details
-    var Coursetro=CoursetroContract.at('0x2997db30d4e2b905c99086c2934089fb29ac698b');
+    var Coursetro=CoursetroContract.at('0xc2de5904491210a1324be98026cffcebbe960fdf');
     console.log(Coursetro);
 
     //calling the getinstructor function
-    Coursetro.getInstructor(function(error, result){
-            if(!error)
+    // Coursetro.getInstructor(function(error, result){
+    //         if(!error)
+    //             {
+    //                 $("#instructor").html(result[0]+' ('+result[1]+' years old)');
+    //                 console.log(result);
+    //             }
+    //         else
+    //             console.error(error);
+    //     });
+
+    //calling event
+    var instructorEvent = Coursetro.Instructor();
+
+    instructorEvent.watch(function(error, result){
+            if (!error)
                 {
-                    $("#instructor").html(result[0]+' ('+result[1]+' years old)');
-                    console.log(result);
+                    $("#loader").hide();
+                    $("#instructor").html(result.args.name + ' (' + result.args.age + ' years old)');
+                } else {
+                    $("#loader").hide();
+                    console.log(error);
                 }
-            else
-                console.error(error);
         });
 
         //setinstructor function
         $("#button").click(function() {
             Coursetro.setInstructor($("#name").val(), $("#age").val());
+            $("#loader").show();
         });
     </script>
 
